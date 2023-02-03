@@ -30,7 +30,7 @@ public class AdprojectTeam5apiApplication {
 			Movie m2= movieRepository.save(new Movie(2,"Titanic"));
 			Movie m3= movieRepository.save(new Movie(3,"KKK"));
 
-			System.out.println("nice to meet you");
+			System.out.println("nice to meet you!!!!");
 
 		};
 	}
