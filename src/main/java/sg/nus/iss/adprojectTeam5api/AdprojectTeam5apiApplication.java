@@ -21,12 +21,12 @@ public class AdprojectTeam5apiApplication {
 		SpringApplication.run(AdprojectTeam5apiApplication.class, args);
 	}
 
-<<<<<<< HEAD
+
 	// @Bean
 	// CommandLineRunner loadData(
 	// MovieRepository movieRepository,
 	// FavouriteRepository favouriteRepository) {
-	// return (args) -> {
+	// return (args) -> 
 	// // User u1= new User(1,"John","john",true,"ADMIN");
 	// // Favourite f1= favouriteRepository.save(1,)
 	// // Movie m1 = movieRepository.save(new Movie(1, "Life of Pi"));
@@ -34,23 +34,6 @@ public class AdprojectTeam5apiApplication {
 	// // Movie m3 = movieRepository.save(new Movie(3, "KKK"));
 	// };
 	// }
-=======
-	@Bean
-	CommandLineRunner loadData(
-		MovieRepository movieRepository,
-		FavouriteRepository favouriteRepository
-	){
-		return (args) ->{
-			// User u1= new User(1,"John","john",true,"ADMIN");
-			// Favourite f1= favouriteRepository.save(1,)
-			Movie m1= movieRepository.save(new Movie(1,"Life of Pi"));
-			Movie m2= movieRepository.save(new Movie(2,"Titanic"));
-			Movie m3= movieRepository.save(new Movie(3,"KKK"));
 
-			System.out.println("nice to meet youqq!!!!");
-
-		};
-	}
->>>>>>> 7d91008ccc0af2325de124891258ffad055600f1
 
 }
