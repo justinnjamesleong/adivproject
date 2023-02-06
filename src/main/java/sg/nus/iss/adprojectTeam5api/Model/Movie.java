@@ -22,11 +22,13 @@ public class Movie {
     private int id;
 
     @Column(name = "moviename")
-    private String movie_name;
-
+    private String title;
+    private String overview;
+    private String poster_path;
+    private String backdrop_path;
 
     // public Movie(int movie_id, String movie_name){
-    //     this.movie_id=movie_id;
-    //     this.movie_name=movie_name;
+    // this.movie_id=movie_id;
+    // this.movie_name=movie_name;
     // }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+</head>
+<body>
+    <p th:if="${movies != null}">The model attribute 'movies' is not null</p>
+<p th:if="${movies == null}">The model attribute 'movies' is null</p>
+    <h1>Movies</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Overview</th>
+            <th>Image</th>
+        </tr>
+        <tr th:each="movie : ${movieslist}">
+            <td th:text="${movie.id}"></td>
+            <td th:text="${movie.title}"></td>
+            <td th:text="${movie.overview}"></td>
+            <td th:text="${movie.poster_path}"></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -25,86 +25,176 @@ import org.hibernate.annotations.Fetch;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 @Entity
-@Table(name = "User")
-public class User implements Serializable {
-  
-  private static final long serialVersionUID = 6529685098267757680L;
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
-  
-  @NotBlank(message = "{error.user.name.empty}")
-  @Column(name = "name")
-  private String name;
-  
-  @NotBlank(message = "{error.user.password.empty}")
-  @Column(name = "password")
-  private String password;
-  
-  @Column(name="isActive")
-   private boolean isActive;
+@Table(	name = "users", 
+		uniqueConstraints = { 
+			@UniqueConstraint(columnNames = "username"),
+			@UniqueConstraint(columnNames = "email") 
+		})
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-   @Column(name = "role", columnDefinition = "ENUM('ADMIN','REGUSER')")
-  @Enumerated(EnumType.STRING)
-  private RoleEnum role;
+	@NotBlank
+	@Size(max = 20)
+	private String username;
 
-    // @OneToMany(targetEntity = Favourite.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    // @JsonIgnore
-    // private List<Favourite> favourites;
+	@NotBlank
+	@Size(max = 50)
+	@Email
+	private String email;
 
+	@NotBlank
+	@Size(max = 120)
+	private String password;
 
-  public User() {}
-  
-  public User(int id,String name, String password, boolean isActive, RoleEnum role) {
-      this.id=id;
-      this.name = name;
-      this.password = password;
-      this.isActive = isActive;
-      this.role=role;
-    }
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
 
-//  public User(int userId) {
-//    this.userId = userId;
-//  }
+	public User() {
+	}
 
-  public int getUserId() {
-    return id;
-  }
+	public User(String username, String email, String password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
 
-  public void setUserId(int userId) {
-    this.id = userId;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public String getUsername() {
+		return username;
+	}
 
-  public String getPassword() {
-    return password;
-  }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
-  
-  public boolean getIsActive(){
-    return isActive;
-  }
+	public String getEmail() {
+		return email;
+	}
 
-  public void setIsActive(boolean isActive){
-    this.isActive = isActive;
-  }
-  public RoleEnum getRole(){
-    return role;
-  }
-  public void setRole(RoleEnum role){
-    this.role=role;
-  }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 }
+
+// @Entity
+// @Table(name = "User")
+// public class User implements Serializable {
+  
+//   private static final long serialVersionUID = 6529685098267757680L;
+//   @Id
+//   @GeneratedValue(strategy = GenerationType.IDENTITY)
+//   private int id;
+  
+//   @NotBlank(message = "{error.user.name.empty}")
+//   @Column(name = "name")
+//   private String name;
+  
+//   @NotBlank(message = "{error.user.password.empty}")
+//   @Column(name = "password")
+//   private String password;
+  
+//   @Column(name="isActive")
+//    private boolean isActive;
+
+//    @Column(name = "role", columnDefinition = "ENUM('ADMIN','REGUSER')")
+//   @Enumerated(EnumType.STRING)
+//   private RoleEnum role;
+
+//     // @OneToMany(targetEntity = Favourite.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+//     // @JsonIgnore
+//     // private List<Favourite> favourites;
+
+
+//   public User() {}
+  
+//   public User(int id,String name, String password, boolean isActive, RoleEnum role) {
+//       this.id=id;
+//       this.name = name;
+//       this.password = password;
+//       this.isActive = isActive;
+//       this.role=role;
+//     }
+
+// //  public User(int userId) {
+// //    this.userId = userId;
+// //  }
+
+//   public int getUserId() {
+//     return id;
+//   }
+
+//   public void setUserId(int userId) {
+//     this.id = userId;
+//   }
+
+//   public String getName() {
+//     return name;
+//   }
+
+//   public void setName(String name) {
+//     this.name = name;
+//   }
+
+//   public String getPassword() {
+//     return password;
+//   }
+
+//   public void setPassword(String password) {
+//     this.password = password;
+//   }
+  
+//   public boolean getIsActive(){
+//     return isActive;
+//   }
+
+//   public void setIsActive(boolean isActive){
+//     this.isActive = isActive;
+//   }
+//   public RoleEnum getRole(){
+//     return role;
+//   }
+//   public void setRole(RoleEnum role){
+//     this.role=role;
+//   }
+
+// }
 
