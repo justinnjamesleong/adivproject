@@ -27,7 +27,6 @@ public class AdminController {
         return "user-list";
     }
 
-
     @RequestMapping(value = "/banUser", method = RequestMethod.GET)
     public String banUser(Long userId, Model model) {
         User user = userService.findUserById(userId);

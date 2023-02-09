@@ -2,10 +2,7 @@ package sg.nus.iss.adprojectTeam5api.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sg.nus.iss.adprojectTeam5api.Model.RoleEnum;
 import sg.nus.iss.adprojectTeam5api.Model.User;
 import sg.nus.iss.adprojectTeam5api.Model.UserSession;
@@ -13,6 +10,7 @@ import sg.nus.iss.adprojectTeam5api.Service.UserService;
 
 import javax.servlet.http.HttpSession;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
