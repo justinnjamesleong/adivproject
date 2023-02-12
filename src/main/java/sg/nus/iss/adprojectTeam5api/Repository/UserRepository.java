@@ -30,4 +30,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("delete From Social s where s.user_id= :user_id and s.follower_id= :follower_id")
     List<Long> deleteFollowerById(@Param("user_id") Long user_id, @Param("follower_id") Long follower_id);
+
+    @Query("Select s.user_id From Social s where s.follower_id= :id")
+    List<Long> findFollowingsId(@Param("id") Long id);
+
 }

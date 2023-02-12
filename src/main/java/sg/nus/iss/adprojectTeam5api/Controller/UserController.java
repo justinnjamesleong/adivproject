@@ -59,16 +59,49 @@ public class UserController {
 
 
     @RequestMapping(value = "/removeFollower", method = RequestMethod.GET)
-    public String removeFollower(Model model,Long followerId) {
+    public String removeFollower(Long followRelationId, Model model) {
         //        UserSession userSession = (UserSession) session.getAttribute("user");
 
         // this is for mock testing
         UserSession userSession = new UserSession(new User("jasmine", "66@qq.com", "password", true, RoleEnum.USER));
         User user = userSession.getUser();
 
-        userService.deleteFollowerById(user.getId(),followerId);
+        userService.deleteFollowerById(user.getId(),followRelationId);
         userService.updateUser(user);
         return "redirect:/user/manageFollower";
+
+    }
+
+    @RequestMapping(value = "/manageFollowing")
+    public String manageFollowing(HttpSession session, Model model) {
+        //        UserSession userSession = (UserSession) session.getAttribute("user");
+
+        // this is for mock testing
+        UserSession userSession = new UserSession(new User("jasmine", "66@qq.com", "password", true, RoleEnum.USER));
+        User user = userSession.getUser();
+
+        List<Long> followingsIdList= userService.findFollowingsId(user);
+        List<User> followingsList=new ArrayList<>();
+        for(Long id :followingsIdList)
+        {
+            followingsList.add( userService.findUserById(id));
+        }
+        model.addAttribute("followings", followingsList);
+
+        return "followers-list";
+    }
+
+    @RequestMapping(value = "/removeFollowing", method = RequestMethod.GET)
+    public String removeFollowing(Long followRelationId, Model model) {
+        //        UserSession userSession = (UserSession) session.getAttribute("user");
+
+        // this is for mock testing
+        UserSession userSession = new UserSession(new User("jasmine", "66@qq.com", "password", true, RoleEnum.USER));
+        User user = userSession.getUser();
+
+        userService.deleteFollowerById(followRelationId, user.getId());
+        userService.updateUser(user);
+        return "redirect:/user/manageFollowing";
 
     }
 

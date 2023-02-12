@@ -42,4 +42,10 @@ public class UserServiceImpl implements UserService {
     public  void deleteFollowerById(Long userId,Long followerId){
      userRepository.deleteFollowerById(userId,followerId);
     }
+
+    public List<Long> findFollowingsId(User user){
+        List<Long> followingsId= userRepository.findFollowingsId(user.getId());
+        return  followingsId;
+
+    }
 }
