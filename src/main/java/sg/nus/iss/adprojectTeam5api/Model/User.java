@@ -1,6 +1,7 @@
 package sg.nus.iss.adprojectTeam5api.Model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,11 @@ public class User {
     @Column(name = "isActive")
     private boolean isActive;
 
+    @Column(name = "fromDate")
+    private LocalDate fromDate;
+
+
+
     @Column(name = "role", columnDefinition = "ENUM('ADMIN','USER')")
     @Enumerated(EnumType.STRING)
     private RoleEnum role;
@@ -89,6 +95,15 @@ public class User {
         this.password = password;
         this.isActive = isActive;
         this.role = role;
+    }
+
+
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
     }
 
     public Long getId() {

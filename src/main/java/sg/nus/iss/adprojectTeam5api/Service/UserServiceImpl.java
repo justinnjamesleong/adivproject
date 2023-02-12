@@ -32,4 +32,14 @@ public class UserServiceImpl implements UserService {
         System.out.println(user);
         userRepository.updateUser(user.getId(),user.getUsername(),user.getPassword(),user.getEmail());
     }
+
+    public List<Long> findFollowersId( User user){
+
+       List<Long> followersId= userRepository.findFollowersId(user.getId());
+       return  followersId;
+    }
+
+    public  void deleteFollowerById(Long userId,Long followerId){
+     userRepository.deleteFollowerById(userId,followerId);
+    }
 }
