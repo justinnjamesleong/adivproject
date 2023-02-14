@@ -1,6 +1,7 @@
 package sg.nus.iss.adprojectTeam5api.Model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,6 @@ import org.hibernate.annotations.Fetch;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,102 +36,142 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(	name = "users", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
-		})
+@Table( name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotBlank
-	@Size(max = 20)
-	private String username;
+    @NotBlank
+    @Size(max = 20)
+    private String username;
 
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	private String email;
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
 
-	@NotBlank
-	@Size(max = 120)
-	private String password;
+    @NotBlank
+    @Size(max = 120)
+    private String password;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
+    @Column(name = "isActive")
+    private boolean isActive;
 
-	public User() {
-	}
+    @Column(name = "fromDate")
+    private LocalDate fromDate;
 
-	public User(String username, String email, String password) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
 
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Column(name = "role", columnDefinition = "ENUM('ADMIN','USER')")
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
 
-	public String getUsername() {
-		return username;
-	}
+    public User() {
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public User(Long id, String username, String email, String password, boolean isActive, RoleEnum role) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isActive = isActive;
+        this.role = role;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public User(String username, String email, String password, boolean isActive, RoleEnum role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isActive = isActive;
+        this.role = role;
+    }
 
-	public String getPassword() {
-		return password;
-	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public LocalDate getFromDate() {
+        return fromDate;
+    }
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
+    }
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public RoleEnum getRole() {
+        return role;
+    }
+
+    public void setRole(RoleEnum role) {
+        this.role = role;
+    }
 }
 
 // @Entity
 // @Table(name = "User")
 // public class User implements Serializable {
-  
+
 //   private static final long serialVersionUID = 6529685098267757680L;
 //   @Id
 //   @GeneratedValue(strategy = GenerationType.IDENTITY)
 //   private int id;
-  
+
 //   @NotBlank(message = "{error.user.name.empty}")
 //   @Column(name = "name")
 //   private String name;
-  
+
 //   @NotBlank(message = "{error.user.password.empty}")
 //   @Column(name = "password")
 //   private String password;
-  
+
 //   @Column(name="isActive")
 //    private boolean isActive;
 
@@ -145,7 +185,7 @@ public class User {
 
 
 //   public User() {}
-  
+
 //   public User(int id,String name, String password, boolean isActive, RoleEnum role) {
 //       this.id=id;
 //       this.name = name;
@@ -181,7 +221,7 @@ public class User {
 //   public void setPassword(String password) {
 //     this.password = password;
 //   }
-  
+
 //   public boolean getIsActive(){
 //     return isActive;
 //   }

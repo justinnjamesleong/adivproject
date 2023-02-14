@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<h3>User List page</h3>
+
+<table>
+    <thead>
+    <tr class="listHeading">
+        <th><span th:text="#{fieldLabel.name}"></span></th>
+        <th><span th:text="#{fieldLabel.fromDate}"></span></th>
+        <th><span th:text="#{fieldLabel.action}"></span></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${followerList}" class="listRecord">
+        <td th:text="${user.username}">Name</td>
+        <td th:text="${user.fromDate}">fromDate</td>
+        <td class="align-middle">
+            <a th:href="@{/user/removeFollower(followRelationId=${user.id})}"
+               class="btn btn-info btn-block">
+                Remove
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

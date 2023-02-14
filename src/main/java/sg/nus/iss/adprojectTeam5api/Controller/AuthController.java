@@ -1,8 +1,6 @@
 package sg.nus.iss.adprojectTeam5api.Controller;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -20,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import sg.nus.iss.adprojectTeam5api.Model.Role;
 import sg.nus.iss.adprojectTeam5api.Model.RoleEnum;
 import sg.nus.iss.adprojectTeam5api.Model.User;
-import sg.nus.iss.adprojectTeam5api.Repository.RoleRepository;
 import sg.nus.iss.adprojectTeam5api.Repository.UserRepository;
 import sg.nus.iss.adprojectTeam5api.Security.JwtResponse;
 import sg.nus.iss.adprojectTeam5api.Security.JwtUtils;
@@ -41,9 +37,6 @@ public class AuthController {
 
     @Autowired
     UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder encoder;
@@ -87,36 +80,39 @@ public class AuthController {
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(),
+        User user = new User(
+                signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                encoder.encode(signUpRequest.getPassword()),
+                true,
+                RoleEnum.USER);
 
-        Set<String> strRoles = signUpRequest.getRole();
-        Set<Role> roles = new HashSet<>();
+//        Set<String> strRoles = signUpRequest.getRole();
+//        Set<Role> roles = new HashSet<>();
 
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(RoleEnum.USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(RoleEnum.ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-
-                        break;
-
-                    default:
-                        Role userRole = roleRepository.findByName(RoleEnum.USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-                }
-            });
-        }
-
-        user.setRoles(roles);
+//        if (strRoles == null) {
+//            Role userRole = roleRepository.findByName(RoleEnum.USER)
+//                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//            roles.add(userRole);
+//        } else {
+//            strRoles.forEach(role -> {
+//                switch (role) {
+//                    case "admin":
+//                        Role adminRole = roleRepository.findByName(RoleEnum.ADMIN)
+//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//                        roles.add(adminRole);
+//
+//                        break;
+//
+//                    default:
+//                        Role userRole = roleRepository.findByName(RoleEnum.USER)
+//                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//                        roles.add(userRole);
+//                }
+//            });
+//        }
+//
+//        user.setRole(roles);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

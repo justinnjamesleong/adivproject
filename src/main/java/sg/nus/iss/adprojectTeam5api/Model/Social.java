@@ -19,12 +19,12 @@ public class Social {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "socialid")
-    private int social_id;
+    private Long social_id;
 
     @Column(name="userid")
-    private int user_id;
+    private Long user_id;
 
     @Column(name="followerid")
-    private int follower_id;
+    private Long follower_id;
   
 }
